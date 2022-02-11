@@ -1,0 +1,118 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
+
+
+const int CHARLENGTH = 1;
+const int MINSTRLENGTH = 6;
+const char DEFAULTCHAR = '\0';
+const string DEFAULTSTR = "\0";
+
+class Target {
+
+private:
+   string theString;
+   char keyCharacter;
+public:
+   //constructors
+   Target(void) {
+      theString = DEFAULTSTR;
+      keyCharacter = DEFAULTCHAR;
+   }
+   Target(char chr, string str) {
+      theString = str;
+      keyCharacter = chr;
+   }
+   //grabbers
+   string grabString() { return theString; }
+   char grabChar() { return keyCharacter; }
+
+   string maskCharacter() {
+      int pos = 0;
+      string newString;
+      newString = theString;
+      for(int i = 0; i < newString.length(); i++) {
+         if(newString[i] == keyCharacter) {
+            newString[i] = '$';
+         }
+      }
+      return newString;
+   }
+   string removeCharacter() {
+      int pos = 0;
+      string newString;
+      newString = theString;
+         for(int i = 0; i < newString.length(); i++) {
+            if(newString[i] == keyCharacter) {
+            newString[i] = '\0';
+         }
+      }
+      return newString;
+
+   }
+
+   int keyCount() {
+      int pos = 0;
+      int count = 0;
+      string newString;
+      newString = theString;
+      for(int i = 0; i < newString.length(); i++) {
+         if(newString[i] == keyCharacter) {
+            count += 1;        
+         }
+      }
+      return count;
+   }
+   
+
+};
+
+char getKeyCharacter() {
+   string key;
+   key = '\0';
+   cout << "Enter the key: ";
+   cin >> key;
+   char charKey;
+   if (key.length() > CHARLENGTH || key.length() < CHARLENGTH) {
+      do {
+         cout << "\nImproper length please enter key: ";
+         cin >> key;
+      } while (key.length() > CHARLENGTH || key.length() < CHARLENGTH);
+   }
+   charKey = key[0];
+   return charKey;
+}
+string getString() {
+   string userString;
+   cout << "Enter a string: ";
+   if (iswspace(cin.peek())) cin.ignore();
+   getline(cin, userString);
+   if(userString.length() < MINSTRLENGTH) {
+      do {
+         cout << "\nImproper length, try again:  ";
+         getline(cin, userString);
+      } while (userString.length() < MINSTRLENGTH);
+   }
+   return userString;
+}
+
+
+
+int main() {
+   //getKeyCharacter();
+   //getString();
+   for(int i = 0; i < 4; i++) {
+      Target object1(getKeyCharacter(), getString());
+
+      cout << "With the string '" << object1.grabString() << "' and the key '";
+      cout << object1.grabChar() << "' \nthe following outputs are:" << endl;
+      cout << "Removing the Key: " << endl;
+      cout << object1.removeCharacter() << endl;
+      cout << "\nMasking the Key: " << endl;
+      cout << object1.maskCharacter() << endl;
+      cout << "\nCounting the Key: " << endl;
+      cout << object1.keyCount() << endl;
+   }
+   return 0;
+}
