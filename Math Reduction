@@ -1,0 +1,65 @@
+#include <iostream>
+
+int gcd(int a, int b)
+{
+   if (a < b)
+   {
+      return gcd(b, a);
+   }
+
+   if (b == 0)
+   {
+      return a;
+   }
+
+   return gcd(b, a % b);
+}
+
+bool convertToLowestTerms(int numerator, int denominator)
+{
+   if (denominator == 0)
+   {
+      std::cout << "This is not a fraction since you entered 0 for the "
+                 "denominator.\n";
+      return false;
+   }
+
+   const int fractionGcd = gcd(numerator, denominator);
+
+   std::cout << "The new fraction is " << numerator / fractionGcd << " / "
+            << denominator / fractionGcd << "\n";
+
+   return true;
+}
+
+int readNumber(const std::string &prompt)
+{
+   int number;
+   while (true)
+   {
+      std::cout << prompt;
+      std::cin >> number;
+
+      if (number <= 500 && number >= 0) {
+         return number;
+   }
+
+     std::cout
+        << "Sorry, that is out of the range. It must be between 0 and 500\n";
+  }
+}
+
+int main()
+{
+   std::cout << "Welcome to the lowest terms reducer.\n";
+   std::cout << "The range of values is 0 to 500\n";
+   std::cout << "There will be 5 runs\n";
+
+   for (int i = 0; i < 5; i++)
+   {
+      int numerator = readNumber("Enter the numerator: ");
+      int denominator = readNumber("Enter the denominator: ");
+
+      convertToLowestTerms(numerator, denominator);
+   }
+}
