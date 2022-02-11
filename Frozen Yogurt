@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+
+int main()
+{
+   //Variables
+   const int FREEYOGURT = 11;
+   int userStamps = 0;
+   std::string userstrAnswer = "";
+   std::string userDecision = "";
+   int userintAnswer = 0;
+   std::string sCheck = "";
+
+   //Startup purchase
+   std::cout << "Menu:" << std::endl;
+   std::cout << "  P (process Purchase)" << std::endl;
+   std::cout << "  S (Shut down)" << std::endl;
+   std::cout << "  Your Choice: ";
+   //checking first letter for s or "s"
+   std::cin >> userstrAnswer;
+   sCheck = userstrAnswer[0];
+   //start of while loop
+   while (true)
+   {
+      if (sCheck == "s" || sCheck == "S")
+      {
+         return 1;
+      }
+      //free yogurt checker
+      if (userStamps >= FREEYOGURT)
+      {
+         std::cout << "\n Would you like to redeem Free Yogurt?: ";
+         std::cin >> userstrAnswer;
+         if (userstrAnswer == "yes")
+         {
+            userStamps -= FREEYOGURT;
+            std::cout << "\n You have redeemed a Yogurt!";
+            std::cout << "\n You now have " << userStamps << " stamps";
+         }
+
+      }
+      //repeat loop
+      std::cout << "\n How many Frozen Yogurts would you like to purchase?: ";
+      std::cin >> userintAnswer;
+      //valid input checker
+      if (userintAnswer > 100 || userintAnswer < 0)
+      {
+         std::cout << "Invalid Range, Please Re-enter (0-99)" << std::endl;
+         std::cin >> userintAnswer;
+      }
+      userStamps += userintAnswer;
+      std::cout << "\n You have purchased " << userintAnswer << " Yogurts";
+      std::cout << "\n You now have " << userStamps << " Stamps";
+      std::cout << "\n\n\n Would you like to (P) or (S)?: " << std::endl;
+      std::cin >> userstrAnswer;
+      sCheck = userstrAnswer[0];
+   }
+}
+
