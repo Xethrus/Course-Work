@@ -1,0 +1,89 @@
+#include <iostream>
+
+using namespace std;
+
+
+class ThreeChar {
+private:
+   char char1;
+   char char2;
+   char char3;
+public:
+   const char MIN_VALUE = 'A';
+   const char MAX_VALUE = 'Z';
+   //validate func
+   bool validate(char c) {
+      return c >= MIN_VALUE && c <= MAX_VALUE;
+   }
+
+   //char 1
+   char getChar1() {
+      return char1;
+   }
+   bool setChar1(char newChar1) {
+      if(validate(newChar1)) {
+         char1 = newChar1;
+         return true;
+      }
+      return false;
+   }
+
+   //char2
+   char getChar2() {
+      return char2;
+   }
+
+   bool setChar2(char newChar2) {
+      if(validate(newChar2)) {
+         char2 = newChar2;
+         return true;
+      }
+      return false;
+   }
+
+   //char3
+   char getChar3() {
+      return char3;
+   }
+
+   bool setChar3(char newChar3) {
+      if(validate(newChar3)) {
+         char3 = newChar3;
+         return true;
+      }
+      return false;
+   }
+};
+
+
+
+int main()
+{
+   ThreeChar charObj;
+   //mutator test
+   if (charObj.setChar1('A')) {
+      cout << "Does work" << endl;
+   } else {
+      cout << "Doesn't work" << endl;
+   }
+   //
+   cout << charObj.getChar1() << endl;
+   charObj.setChar2('B');
+   cout << charObj.getChar2() << endl;
+   charObj.setChar3('C');
+   cout << charObj.getChar3() << endl;
+   //mutator test 2
+   if (charObj.setChar2('!')) {
+      cout << "Does work" << endl;
+   } else {
+      cout << "Doesn't work" << endl;
+   }
+   //
+   cout << charObj.getChar2() << endl;
+
+   //second display
+   cout << "\n\n" << charObj.getChar1() << endl;
+   cout << charObj.getChar2() << endl;
+   cout << charObj.getChar3() << endl;
+   cout << charObj.getChar3() << endl;
+};
