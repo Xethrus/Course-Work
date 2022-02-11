@@ -1,0 +1,152 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+
+//define macros
+#define ROW_SIZE 3
+#define COL_SIZE 3
+
+using namespace std;
+
+void displayBoard(char board[ROW_SIZE][COL_SIZE]){
+
+   std::cout << "-------------" << std::endl;
+   std::cout << "| " << board[0][0] << " | " << board[0][1] << " | " << board[0][2] << " |" << std::endl;
+   std::cout << "-------------" << std::endl;
+   std::cout << "| " << board[1][0] << " | " << board[1][1] << " | " << board[1][2] << " |" << std::endl;
+   std::cout << "-------------" << std::endl;
+   std::cout << "| " << board[2][0] << " | " << board[2][1] << " | " << board[2][2] << " |" << std::endl;
+   std::cout << "-------------" << std::endl;
+
+}
+
+void resetBoard(char board[ROW_SIZE][COL_SIZE]){
+
+   for(int i = 0; i < ROW_SIZE * COL_SIZE; ++i)
+   {
+      board[i/3][i%3] = 32;
+   }
+}
+
+void makeAMove(char board[ROW_SIZE][COL_SIZE], char player){
+   char input = 0;
+   char inputCol = 0;
+   while(true)
+   {
+      while(true)
+      {
+         cout << "Enter a row (0, 1, or 2) for player " << player << ":";
+         cin >> input;
+         if(input == '0' || input == '1' || input == '2') {break;}
+       }
+       while(true)
+       {
+          cout << "Enter a column (0, 1, or 2) for player" << player << ":";
+          cin >> inputCol;
+          if(inputCol == '0' || inputCol == '1' || inputCol == '2') {break;}
+       }
+       if(board[input-48][inputCol-48] == 32) {break;}
+       cout << "Spot is taken!\n";
+   }
+   board[input-48][inputCol-48] = player;
+}
+//draw the game board
+bool isDraw(char board[ROW_SIZE][COL_SIZE]){
+   for(int i = 0; i < ROW_SIZE * COL_SIZE; ++i)
+   {
+      if(board[i/3][i%3] == 32)
+      {
+         return false;
+      }
+   }
+   return true;
+}
+//checking win paths
+bool isWon(char board[ROW_SIZE][COL_SIZE], char player)
+{
+   if(board[0][0] == board[0][1] && board[0][0] == board[0][2] && board[0][0] != 32)
+   {
+      cout << player <<" player won" << endl;
+      return true;
+   }
+   if(board[1][0] == board[1][1] && board[1][0] == board[1][2] && board[1][0] != 32)
+   {
+      cout << player <<" player won" << endl;
+      return true;
+   }
+   if(board[2][0] == board[2][1] && board[2][0] == board[2][2] && board[2][0] != 32)
+   {
+      cout << player <<" player won" << endl;
+      return true;
+   }
+   if(board[0][0] == board[1][0] && board[0][0] == board[2][0] && board[0][0] != 32)
+   {
+      cout << player <<" player won" << endl;
+      return true;
+   }
+   if(board[0][1] == board[1][1] && board[0][1] == board[2][1] && board[0][1] != 32)
+   {
+      cout << player <<" player won" << endl;
+      return true;
+   }
+   if(board[0][2] == board[1][2] && board[0][2] == board[2][2] && board[0][2] != 32)
+   {
+      cout << player <<" player won" << endl;
+      return true;
+   }
+   if(board[0][0] == board[1][1] && board[0][0] == board[2][2] && board[0][0] != 32)
+   {
+      cout << player <<" player won" << endl;
+      return true;
+   }
+   if(board[0][2] == board[1][1] && board[0][2] == board[2][0] && board[0][2] != 32)
+   {
+      cout << player <<" player won" << endl;
+      return true;
+   }
+   return false;
+}
+
+int main(void){
+   char player = 'O';
+   int xWin = 0;
+   int oWin = 0;
+   int drawNum = 0;
+   char board[ROW_SIZE][COL_SIZE] = {{32, 32, 32}, {32, 32, 32}, {32, 32, 32}};
+   bool draw = false;
+   bool win = false;
+   for(int i = 0; i < 5; ++i)
+   {
+      cout << "Game " << i+1 << " starting!" << endl;
+      displayBoard(board);
+      while(!draw && !win)
+      {
+         player = player == 'X' ? 'O' : 'X';
+         makeAMove(board, player);
+         displayBoard(board);
+         draw = isDraw(board);
+         win = isWon(board, player);
+      }
+       if(player == 'X' && win)
+       {
+          xWin++;
+       }
+       else if(player == 'O' && win)
+       {
+          oWin++;
+       }
+       if(draw)
+       {
+          drawNum++;
+       }
+       resetBoard(board);
+       draw = false;
+       win = false;
+       player = 'O';
+   }
+
+   cout << "After 5 games, here are the results:" << endl;
+   cout << "X won " << xWin << "\nO won " << oWin << "\nDraws " << drawNum;
+
+   return 0;
+}
