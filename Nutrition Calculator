@@ -1,0 +1,228 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+using namespace std;
+
+// main client --------------------------------------------------------
+int main()
+{
+   //food1 constants
+   const string FOOD_1_NAME = "rhubarb";
+   const int FOOD_1_CALORIES_P100G = 21;
+   const double FOOD_1_FAT_P100G = 0.2;
+   const double FOOD_1_SODIUM_P100G = 4.0;
+   const double FOOD_1_CARBS_P100G = 4.5;
+   const double FOOD_1_DIETARYFIBER_P100G = 1.8;
+   const double FOOD_1_SUGAR_P100G = 1.1;
+
+   //food2 constants
+   const string FOOD_2_NAME = "honeydew";
+   const int FOOD_2_CALORIES_P100G = 36;
+   const double FOOD_2_FAT_P100G = 0.1;
+   const double FOOD_2_SODIUM_P100G = 18.0;
+   const double FOOD_2_CARBS_P100G = 9;
+   const double FOOD_2_DIETARYFIBER_P100G = 0.8;
+   const double FOOD_2_SUGAR_P100G = 8;
+
+   //food3 constants
+   const string FOOD_3_NAME = "pinto beans";
+   const int FOOD_3_CALORIES_P100G = 347;
+   const double FOOD_3_FAT_P100G = 1.2;
+   const double FOOD_3_SODIUM_P100G = 12.0;
+   const double FOOD_3_CARBS_P100G = 63;
+   const double FOOD_3_DIETARYFIBER_P100G = 16;
+   const double FOOD_3_SUGAR_P100G = 2.1;
+
+   //food4 constants
+   const string FOOD_4_NAME = "mascarpone";
+   const int FOOD_4_CALORIES_P100G = 355;
+   const double FOOD_4_FAT_P100G = 36.0;
+   const double FOOD_4_SODIUM_P100G = 0.1;
+   const double FOOD_4_CARBS_P100G = 3.0;
+   const double FOOD_4_DIETARYFIBER_P100G = 0.0;
+   const double FOOD_4_SUGAR_P100G = 3.0;
+
+   //food5 constants
+   const string FOOD_5_NAME = "tofu";
+   const int FOOD_5_CALORIES_P100G = 76;
+   const double FOOD_5_FAT_P100G = 4.8;
+   const double FOOD_5_SODIUM_P100G = .07;
+   const double FOOD_5_CARBS_P100G = 1.9;
+   const double FOOD_5_DIETARYFIBER_P100G = 0.3;
+   const double FOOD_5_SUGAR_P100G = 0.0;
+
+
+   //food6 constants
+   const string FOOD_6_NAME = "salmon";
+   const int FOOD_6_CALORIES_P100G = 208;
+   const double FOOD_6_FAT_P100G = 13.0;
+   const double FOOD_6_SODIUM_P100G = 59.0;
+   const double FOOD_6_CARBS_P100G = 0.0;
+   const double FOOD_6_DIETARYFIBER_P100G = 0.0;
+   const double FOOD_6_SUGAR_P100G = 0.0;
+   //end of constant food values
+
+   const string INDENT= " ";
+
+   string recipeName, userInputStr;
+   int userInputInt;
+   double totalCals, totalFat, totalSodium, totalCarbs, totalFiber, totalSugar;
+
+   //initialize variables
+   int userServings;
+   totalCals = 0;
+   totalFat = 0;
+   totalSodium = 0;
+   totalCarbs = 0;
+   totalFiber = 0;
+   totalSugar = 0;
+   //Error testing constant variables
+   const int maxGrams = 2000;
+   const int minGrams = 0;
+   const int maxServings = 10;
+   const int minServings = 1;
+
+   //print menu
+   cout << "------List of Possible Ingredients------" << endl;
+   cout << INDENT << "Food #1: " << FOOD_1_NAME << endl;
+   cout << INDENT << "Food #2: " << FOOD_2_NAME << endl;
+   cout << INDENT << "Food #3: " << FOOD_3_NAME << endl;
+   cout << INDENT << "Food #4: " << FOOD_4_NAME << endl;
+   cout << INDENT << "Food #5: " << FOOD_5_NAME << endl;
+   cout << INDENT << "Food #6: " << FOOD_6_NAME << endl << endl;
+
+   //name of recipe
+   cout << "What would you like to call this recipe? ";
+   getline(cin,recipeName);
+
+   //ask serving amount
+   cout << "How many servings does this make? ";
+   getline(cin,userInputStr);
+   istringstream(userInputStr) >> userServings;
+   if (userServings < minServings || userServings > maxServings)
+   {
+      cout << "ERROR INVALID VALUES ENTERED" << endl;
+      return 1;
+   }
+
+   //food #1 --------------------------------------------------------
+   cout << "How many grams of " << FOOD_1_NAME << "? ";
+   getline(cin,userInputStr);
+   istringstream(userInputStr) >> userInputInt;
+   if (userInputInt < minGrams || userInputInt > maxGrams)
+   {
+      cout << "ERROR INVALID VALUES ENTERED" << endl;
+      return 1;
+   }
+   //update accumulators 1
+   totalCals += userInputInt * (FOOD_1_CALORIES_P100G / 100.0);
+   totalFat += userInputInt * (FOOD_1_FAT_P100G / 100.0);
+   totalSodium += userInputInt * (FOOD_1_SODIUM_P100G / 100.0);
+   totalCarbs += userInputInt * (FOOD_1_CARBS_P100G / 100.0);
+   totalFiber += userInputInt * (FOOD_1_DIETARYFIBER_P100G / 100.0);
+   totalSugar += userInputInt * (FOOD_1_SUGAR_P100G / 100.0);
+
+   //food #2 --------------------------------------------------------
+   cout << "How many grams of " << FOOD_2_NAME << "? ";
+   getline(cin,userInputStr);
+   istringstream(userInputStr) >> userInputInt;
+   if (userInputInt < minGrams || userInputInt > maxGrams)
+   {
+      cout << "ERROR INVALID VALUES ENTERED" << endl;
+      return 1;
+   }
+   //update accumulators 2
+   totalCals += userInputInt * (FOOD_2_CALORIES_P100G / 100.0);
+   totalFat += userInputInt * (FOOD_2_FAT_P100G / 100.0);
+   totalSodium += userInputInt * (FOOD_2_SODIUM_P100G / 100.0);
+   totalCarbs += userInputInt * (FOOD_2_CARBS_P100G / 100.0);
+   totalFiber += userInputInt * (FOOD_2_DIETARYFIBER_P100G / 100.0);
+   totalSugar += userInputInt * (FOOD_2_SUGAR_P100G / 100.0);
+
+   //food #3 --------------------------------------------------------
+   cout << "How many grams of " << FOOD_3_NAME << "? ";
+   getline(cin,userInputStr);
+   istringstream(userInputStr) >> userInputInt;
+   if (userInputInt < minGrams || userInputInt > maxGrams)
+   {
+      cout << "ERROR INVALID VALUES ENTERED" << endl;
+      return 1;
+   }
+   //update accumulators 3
+   totalCals += userInputInt * (FOOD_3_CALORIES_P100G / 100.0);
+   totalFat += userInputInt * (FOOD_3_FAT_P100G / 100.0);
+   totalSodium += userInputInt * (FOOD_3_SODIUM_P100G / 100.0);
+   totalCarbs += userInputInt * (FOOD_3_CARBS_P100G / 100.0);
+   totalFiber += userInputInt * (FOOD_3_DIETARYFIBER_P100G / 100.0);
+   totalSugar += userInputInt * (FOOD_3_SUGAR_P100G / 100.0);
+
+   //food #4 --------------------------------------------------------
+   cout << "How many grams of " << FOOD_4_NAME << "? ";
+   getline(cin,userInputStr);
+   istringstream(userInputStr) >> userInputInt;
+   if (userInputInt < minGrams || userInputInt > maxGrams)
+   {
+      cout << "ERROR INVALID VALUES ENTERED" << endl;
+      return 1;
+   }
+   //update accumulators 4
+   totalCals += userInputInt * (FOOD_4_CALORIES_P100G / 100.0);
+   totalFat += userInputInt * (FOOD_4_FAT_P100G / 100.0);
+   totalSodium += userInputInt * (FOOD_4_SODIUM_P100G / 100.0);
+   totalCarbs += userInputInt * (FOOD_4_CARBS_P100G / 100.0);
+   totalFiber += userInputInt * (FOOD_4_DIETARYFIBER_P100G / 100.0);
+   totalSugar += userInputInt * (FOOD_4_SUGAR_P100G / 100.0);
+
+   //food #5 --------------------------------------------------------
+   cout << "How many grams of " << FOOD_5_NAME << "? ";
+   getline(cin,userInputStr);
+   istringstream(userInputStr) >> userInputInt;
+   if (userInputInt < minGrams || userInputInt > maxGrams)
+   {
+      cout << "ERROR INVALID VALUES ENTERED" << endl;
+      return 1;
+   }
+   //update accumulators 5
+   totalCals += userInputInt * (FOOD_5_CALORIES_P100G / 100.0);
+   totalFat += userInputInt * (FOOD_5_FAT_P100G / 100.0);
+   totalSodium += userInputInt * (FOOD_5_SODIUM_P100G / 100.0);
+   totalCarbs += userInputInt * (FOOD_5_CARBS_P100G / 100.0);
+   totalFiber += userInputInt * (FOOD_5_DIETARYFIBER_P100G / 100.0);
+   totalSugar += userInputInt * (FOOD_5_SUGAR_P100G / 100.0);
+
+   //food #6 --------------------------------------------------------
+   cout << "How many grams of " << FOOD_6_NAME << "? ";
+   getline(cin,userInputStr);
+   istringstream(userInputStr) >> userInputInt;
+   if (userInputInt < minGrams || userInputInt > maxGrams)
+   {
+      cout << "ERROR INVALID VALUES ENTERED" << endl;
+      return 1;
+   }
+   //update accumulators 6
+   totalCals += userInputInt * (FOOD_6_CALORIES_P100G / 100.0);
+   totalFat += userInputInt * (FOOD_6_FAT_P100G / 100.0);
+   totalSodium += userInputInt * (FOOD_6_SODIUM_P100G / 100.0);
+   totalCarbs += userInputInt * (FOOD_6_CARBS_P100G / 100.0);
+   totalFiber += userInputInt * (FOOD_6_DIETARYFIBER_P100G / 100.0);
+   totalSugar += userInputInt * (FOOD_6_SUGAR_P100G / 100.0);
+
+   //divide totals by servings
+   totalCals /= userServings;
+   totalFat /= userServings;
+   totalSodium /= userServings;
+   totalCarbs /= userServings;
+   totalFiber /= userServings;
+   totalSugar /= userServings;
+
+   //final value report
+   cout << "\nNutrition for " << recipeName << " ----------" << endl;
+   cout << INDENT << "Calories: " << totalCals << endl;
+   cout << INDENT << "Fat: " << totalFat << " grams\n";
+   cout << INDENT << "Sodium: " << totalSodium << " grams\n";
+   cout << INDENT << "Carbs: " << totalCarbs << " grams\n";
+   cout << INDENT << "Dietary Fiber: " << totalFiber << " grams\n";
+   cout << INDENT << "Sugar: " << totalSugar << " grams\n";
+
+   return 0;
+}
