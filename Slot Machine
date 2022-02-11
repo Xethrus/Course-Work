@@ -1,0 +1,156 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+const int MAX_RAND = 100;
+const int MAX_BET = 50;
+const int MIN_BET = 1;
+const char SLOT1 = 'A';
+const char SLOT2 = 'B';
+const char SLOT3 = 'H';
+const char SLOT4 = 'Z';
+const char DEFAULT_LETTER = '\0';
+const int RANGE1 = 33;
+const int RANGE2 = 53;
+const int RANGE3 = 58;
+int userBet;
+
+class ThreeChar {
+private:
+   char char1 = DEFAULT_LETTER;
+   char char2 = DEFAULT_LETTER;
+   char char3 = DEFAULT_LETTER;
+public:   
+   //default
+   ThreeChar(void) {
+      char1 = DEFAULT_LETTER;
+      char2 = DEFAULT_LETTER;
+      char3 = DEFAULT_LETTER;
+   }
+   ThreeChar(char ch1, char ch2, char ch3) {
+      if(ch1 != SLOT1 && ch1 != SLOT2 && ch1 != SLOT3 && ch1 != 'Z') {
+         char1 = DEFAULT_LETTER;
+      } else {
+         char1 = ch1;
+      }
+      if(ch2 != SLOT1 && ch2 != SLOT2 && ch2 != SLOT3 && ch2 != 'Z') {
+         char2 = DEFAULT_LETTER;
+      } else {
+         char2 = ch2;
+      }
+      if(ch3 != SLOT1 && ch3 != SLOT2 && ch3 != SLOT3 && ch3 != 'Z') {
+         char3 = DEFAULT_LETTER;
+      } else {
+         char3 = ch3;
+      }
+   }
+   //1
+   char getChar1() {
+      return char1;
+   }
+   bool setChar1(char newChar1) {
+      char1 = newChar1;
+      return true;
+   }
+   //2
+      char getChar2() {
+      return char2;
+   }
+   bool setChar2(char newChar2) {
+      char2 = newChar2;
+      return true;
+   }
+   //3
+      char getChar3() {
+      return char3;
+   }
+   bool setChar3(char newChar3) {
+      char3 = newChar3;
+      return true;
+   }
+
+};
+
+int getBet() {
+   cout << "How much would you like to bet (1 - 50) or 0 to quit? ";
+   cin >> userBet;
+   if(userBet == 0) {
+      return 0;
+   }
+   while(userBet > MAX_BET || userBet < MIN_BET) {
+      cout << "Enter a valid bet: ";
+      cin >> userBet;
+      if(userBet == 0) {
+         return 0;
+      }
+   }
+   return userBet;
+}
+
+char randChar() {
+   int randomInt;
+   randomInt = rand() % MAX_RAND;
+   if(randomInt < RANGE1) {
+   //a
+      return SLOT1;
+   }
+   if(randomInt >= RANGE1 && randomInt < RANGE2) {
+   //b
+      return SLOT2;
+   }
+   if(randomInt >= RANGE2 && randomInt < RANGE3) {
+   //h
+      return SLOT3;
+   }
+   //z
+   return SLOT4;
+}
+
+ThreeChar pull() {
+   ThreeChar pullChar;
+   pullChar.setChar1(randChar());
+   pullChar.setChar2(randChar());
+   pullChar.setChar3(randChar());
+   return pullChar;
+}
+int getPayMultiplier(ThreeChar pullChar) {
+   if(pullChar.getChar1() == SLOT1 && pullChar.getChar2() != SLOT1) {
+      //x5 multiplier
+      return 5;
+   }
+   if(pullChar.getChar1() == SLOT1 && pullChar.getChar2() == SLOT1 && pullChar.getChar3() != SLOT1) {
+      return 15;
+   }
+   if(pullChar.getChar1() == SLOT1 && pullChar.getChar2() == SLOT1 && pullChar.getChar3() == SLOT1) {
+      return 30;
+   }
+   if(pullChar.getChar1() == SLOT2 && pullChar.getChar2() == SLOT2 && pullChar.getChar3() == SLOT2) {
+      return 50;
+   }
+   if(pullChar.getChar1() == SLOT3 && pullChar.getChar2() == SLOT3 && pullChar.getChar3() == SLOT3) {
+      return 100;
+   }
+   return 0;
+}
+void displayResults(ThreeChar pullChar, int winnings) {
+   cout << "Whirrrrrrrr.... and your pull is... " << endl;
+   cout << pullChar.getChar1() << pullChar.getChar2() << pullChar.getChar3() << endl;
+   if(winnings == 0) {
+      cout << "Sorry you lose" << endl;
+   } else {
+      cout << "Congratz you win, " << winnings << endl;
+   }
+}
+int main() {
+   while(true) {
+      int bet = getBet();
+      if(bet == 0) {
+         return 0;
+      } else {
+      ThreeChar userPull = pull();
+      int payMultipler = getPayMultiplier(userPull);
+      int winnings = bet * payMultipler;
+      displayResults(userPull, winnings);
+      }
+   }
+}
