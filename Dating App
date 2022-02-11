@@ -1,0 +1,210 @@
+using namespace std;
+#include <iostream>
+#include <cmath>
+ 
+class DateProfile {
+private:
+char gender;
+char searchGender;
+int romance;
+int distance;
+int ID;
+ 
+int determineGenderFit(DateProfile partner) {
+   if(searchGender != partner.gender) {
+      return 0;
+   }
+   return 1; 
+}
+double determineRomanceFit(DateProfile partner) { 
+   return(1 -(.1*abs(romance - partner.getRomance())));
+}
+double deterimineDistanceFit(DateProfile partner) {
+   return(1 -(.1*abs(distance - partner.getDistance())));
+}
+public:
+const int DEFAULT_INT = 1;
+const int MIN_ROMANCE = 1;
+const int MAX_ROMANCE = 10;
+const int MIN_DISTANCE = 1;
+const int MAX_DISTANCE = 10;
+const int MIN_ID_LEN = 1;
+const int MAX_ID_LEN = 5;
+const char DEFAULT_GEND = '\0';
+const char DEFAULT_SEARCH_GEND = '\0';
+const char DEFAULT_ID = '\0';
+ 
+ 
+//get/set romance
+int getRomance() {
+   return romance;
+}
+bool setRomance(int rmnc) {
+   if(rmnc >= MIN_ROMANCE && rmnc <= MAX_ROMANCE) {
+      romance = rmnc;
+      return true;
+   }
+   return false;
+}
+//get/set distance
+int getDistance() {
+   return distance;
+}
+bool setDistance(int dist) {
+   if(dist >= MIN_DISTANCE && dist <= MAX_DISTANCE) {
+      distance = dist;
+      return true;
+   }
+   return false;
+}
+//get/set gender
+char getGender() {
+   return gender;
+}
+bool setGender(char gdr) {
+   if(gdr == 'M' || gdr == 'F') {
+      gender = gdr;
+      return true;
+   }
+   return false;
+   cout << "Gender is Invalid.. " << endl;
+}
+//get/set searchGender
+char getsearchGender() {
+   return searchGender;
+}
+bool setsearchGender(char srchGen) {
+   if(srchGen == 'M' || srchGen == 'F') {
+      searchGender = srchGen;
+      return true;
+   }
+   return false;
+}
+//get/set ID
+int getID() {
+   return ID;
+}
+bool setID(int idnt) {
+   int identLength = to_string(idnt).length();
+   if(identLength >= MIN_ID_LEN && identLength <= MAX_ID_LEN) {
+      ID = idnt;
+      return true;
+   }
+   return false;
+}
+//test output
+void output() {
+   cout << "this is romance " << romance << endl;
+}
+ 
+ 
+ 
+//void setAll
+void setAll(char gen, char searchGen, int rom, int dist, int ident) {
+   setGender(gen);
+   setsearchGender(searchGen);
+   setRomance(rom);
+   setDistance(dist);
+   setID(ident);
+}
+//void default
+void setDefaults() {
+   gender = DEFAULT_GEND;
+   searchGender = DEFAULT_SEARCH_GEND;
+   romance = DEFAULT_INT;
+   distance = DEFAULT_INT;
+   ID = DEFAULT_INT;
+}
+//overloading
+const double operator*(const DateProfile& profile2) {
+   double fitp1 = determineGenderFit(profile2);
+   double fitp2 = determineRomanceFit(profile2);
+   double fitp3 = deterimineDistanceFit(profile2);
+   double finalComp;
+   if(fitp1 == 0){
+      return fitp1;
+   }
+   finalComp = (fitp2 + fitp3) / 2;
+   return finalComp;
+}
+DateProfile() {
+   setDefaults();
+}
+DateProfile(char gender, char searchGender, int romance, int distance, int ID) {
+   setAll(gender,searchGender,romance,distance,ID);
+}
+ 
+};
+ 
+int main() {
+ 
+   DateProfile applicant1('M','F',4,4,1234);
+   DateProfile applicant2('F','M',5,6,1235);
+   DateProfile applicant3('F','M',6,6,1236);
+   DateProfile applicant4('F','M',6,6,1236);
+
+   //applicant1 runs
+   cout << "Fit between " << applicant1.getID()
+    << " and " << applicant1.getID() << " is: " 
+    << applicant1 * applicant1 << endl;
+
+   cout << "Fit between " << applicant1.getID()
+    << " and " << applicant2.getID() << " is: " 
+    << applicant1 * applicant2 << endl;
+
+   cout << "Fit between " << applicant1.getID()
+    << " and " << applicant3.getID() << " is: " 
+    << applicant1 * applicant3 << endl;
+   
+   cout << "Fit between " << applicant1.getID()
+    << " and " << applicant4.getID() << " is: " 
+    << applicant1 * applicant4 << endl;
+   //applicant2 runs
+   cout << "Fit between " << applicant2.getID()
+    << " and " << applicant1.getID() << " is: " 
+    << applicant1 * applicant1 << endl;
+
+   cout << "Fit between " << applicant2.getID()
+    << " and " << applicant2.getID() << " is: " 
+    << applicant1 * applicant2 << endl;
+
+   cout << "Fit between " << applicant2.getID()
+    << " and " << applicant3.getID() << " is: " 
+    << applicant1 * applicant3 << endl;
+   
+   cout << "Fit between " << applicant2.getID()
+    << " and " << applicant4.getID() << " is: " 
+    << applicant1 * applicant4 << endl;
+   //applicant3 runs
+   cout << "Fit between " << applicant3.getID()
+    << " and " << applicant1.getID() << " is: " 
+    << applicant1 * applicant1 << endl;
+
+   cout << "Fit between " << applicant3.getID()
+    << " and " << applicant2.getID() << " is: " 
+    << applicant1 * applicant2 << endl;
+
+   cout << "Fit between " << applicant3.getID()
+    << " and " << applicant3.getID() << " is: " 
+    << applicant1 * applicant3 << endl;
+   
+   cout << "Fit between " << applicant3.getID()
+    << " and " << applicant4.getID() << " is: " 
+    << applicant1 * applicant4 << endl;
+   //applicant4 runs
+   cout << "Fit between " << applicant4.getID()
+    << " and " << applicant1.getID() << " is: " 
+    << applicant1 * applicant1 << endl;
+
+   cout << "Fit between " << applicant4.getID()
+    << " and " << applicant2.getID() << " is: " 
+    << applicant1 * applicant2 << endl;
+
+   cout << "Fit between " << applicant4.getID()
+    << " and " << applicant3.getID() << " is: " 
+    << applicant1 * applicant3 << endl;
+   
+   cout << "Fit between " << applicant4.getID()
+    << " and " << applicant4.getID() << " is: " 
+    << applicant1 * applicant4 << endl; 
+}
