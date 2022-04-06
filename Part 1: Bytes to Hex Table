@@ -10,6 +10,12 @@ void fillVector(std::ifstream &inFile,std::vector<char> &charVector) {
              std::istream_iterator<char>(),
              std::back_inserter(charVector));
 }
+void printVectors(std::vector<char> const &inVector) {
+    for(auto & element : inVector) {
+        std::cout << element << ' ';
+    }
+    std::cout << std::endl;
+}
 void splitVector(std::vector<char> &charVector) {
     int desiredSegments = 4;
     int size = (charVector.size() - 1) / desiredSegments + 1;
@@ -24,18 +30,26 @@ void splitVector(std::vector<char> &charVector) {
         }
         std::copy(start_itr, end_itr, vectors[counter].begin());
     }
+    for(int i = 0; i < size; i++) {
+        printVectors(vectors[i]);
+    }
 }
 void printTable(std::vector<char> charVector) {
     //TODO: print out table with components
+    splitVector(charVector);
 }
 int main(void) {
     std::ifstream inFile;
     inFile.open("hi.txt");
+    std::vector<char> createdVector;
     if(!inFile) {
         std::cout << "file failed to load/open" << std::endl;
     }
     if(inFile.is_open()) {
         //TODO: make this do stuff lol
+        fillVector(inFile, createdVector);
+        splitVector(createdVector);
+
     }
     return 0;
 };
