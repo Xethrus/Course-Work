@@ -1,0 +1,41 @@
+//Part One: Bytes to hex table
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <iterator>
+
+
+void fillVector(std::ifstream &inFile,std::vector<char> &charVector) {
+    std::copy(std::istream_iterator<char>(inFile),
+             std::istream_iterator<char>(),
+             std::back_inserter(charVector));
+}
+void splitVector(std::vector<char> &charVector) {
+    int desiredSegments = 4;
+    int size = (charVector.size() - 1) / desiredSegments + 1;
+    std::vector<char> vectors[size];
+    for(int counter = 0; counter < size; ++counter) {
+        auto start_itr = std::next(charVector.cbegin(), counter * desiredSegments);
+        auto end_itr = std::next(charVector.cbegin(), counter * desiredSegments + desiredSegments);
+        vectors[counter].resize(desiredSegments);
+        if(counter * desiredSegments + desiredSegments > charVector.size()) {
+            end_itr = charVector.cend();
+            vectors[counter].resize(charVector.size() - counter * desiredSegments);
+        }
+        std::copy(start_itr, end_itr, vectors[counter].begin());
+    }
+}
+void printTable(std::vector<char> charVector) {
+    //TODO: print out table with components
+}
+int main(void) {
+    std::ifstream inFile;
+    inFile.open("hi.txt");
+    if(!inFile) {
+        std::cout << "file failed to load/open" << std::endl;
+    }
+    if(inFile.is_open()) {
+        //TODO: make this do stuff lol
+    }
+    return 0;
+};
